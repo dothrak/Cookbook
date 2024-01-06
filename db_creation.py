@@ -25,7 +25,7 @@ def db_structure(db_name, title, ingredients, directions, tags, source, url):
     cursor = connection.cursor()
 
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS Recettes (
+        CREATE TABLE IF NOT EXISTS Receipes (
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Title TEXT,
             Ingredients TEXT,
@@ -37,7 +37,7 @@ def db_structure(db_name, title, ingredients, directions, tags, source, url):
     ''')
 
     cursor.execute('''
-        INSERT INTO Recettes (Title, Ingredients, Description, Tags, Source, URL)
+        INSERT INTO Receipes (Title, Ingredients, Description, Tags, Source, URL)
         VALUES (?, ?, ?, ?, ?, ?)
     ''', (title, ingredients, directions, tags, source, url))
 
@@ -67,13 +67,13 @@ def process_folder(folder_path, db_name):
     pbar.close()
 
 def main():
-    folder_path = 'D:\\VS Code\\Projet\\Cookbook\\Database'
+    folder_path = 'D:\\VS Code\\Projet\\Cookbook\\Database\\1'
     db_name = 'D:\\VS Code\\Projet\\Cookbook\\Database\\Receipes.db'
         
     if os.path.exists(db_name):
         print("Existing database found. Deleting and recreating...")
         os.remove(db_name)
-        
+
     process_folder(folder_path, db_name)
 
 if __name__ == "__main__":
