@@ -1,0 +1,109 @@
+@font-face {
+  font-family: 'Italianno';
+  src: url('/static/fonts/Italianno-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'JuliusSansOne';
+  src: url("/static/fonts/JuliusSansOne-Regular.ttf") format('truetype');
+}
+
+body {
+  font-family: sans-serif;
+  background-image: url("/static/images/cookbook.jpg");
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-grow: 1;
+}
+
+.bar {
+  position: absolute;
+  background-color: black;
+  border-radius: 10px;
+  transform-origin: 0 0;
+}
+
+.bar1 {
+  width: 771px;
+  height: 1px;
+  top: 205px;
+  left: calc(50% - 385.5px);
+  transform: rotate(0deg);
+}
+
+.bar2 {
+  width: 771px;
+  height: 1px;
+  top: 309px;
+  left: calc(50% - 385.5px);
+  transform: rotate(0deg);
+}
+
+.dothrak-cookbook {
+  position: absolute;
+  top: 185px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  font-family: 'JuliusSansOne', sans-serif;
+  font-size: 3em;
+}
+
+.make-cooking-easy {
+  position: absolute;
+  top: 340px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  font-family: 'Italianno', sans-serif;
+  font-size: 2em;
+}
+
+button {
+  font-size: 1em;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  background-color: #F1ECAE;
+  border-radius: 10px;
+  color: black;
+}
+
+#recipes-btn {
+  position: absolute;
+  top: 435px;
+  left: 250px;
+  transform: rotate(0deg);
+  font-family: 'JuliusSansOne', sans-serif;
+  font-size: 1em;
+}
+
+#search-btn {
+  position: absolute;
+  top: 435px;
+  left: 760px;
+  transform: rotate(0deg);
+  font-family: 'JuliusSansOne', sans-serif;
+  font-size: 1em;
+}
+
+.copyright {
+  margin-top: auto;
+  padding: 20px;
+  color: black;
+  font-family: 'JuliusSansOne', sans-serif;
+  font-size: 1em;
+}
