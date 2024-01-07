@@ -4,42 +4,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Selector</title>
+    <link rel="stylesheet" href="/static/recipes_inventory.css"> 
+    <title>Dothrak's Cookbook</title>
 </head>
 <body>
-    <h1>Recipe Selector</h1>
-    <form action="" method="POST">
-        <label for="recipeSelect">Choose a recipe:</label>
-        <select name="recipeSelect" id="recipeSelect">
-            {% for title in titles %}
-                <option value="{{ title }}">{{ title }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Get Recipe</button>
-    </form>
+    <header>
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="dothrak-cookbook">Dothrak's Cookbook</div>
+    </header>
+    <a href="{{ url_for('index') }}" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: black; font-family: 'JuliusSansOne', sans-serif; font-size: 1em;">Home</a>    <main>
+        <form id="recipeForm">
+            <label for="recipeSelect">Choose a recipe:
+            <select name="recipeSelect" id="recipeSelect">
+                {% for title in titles %}
+                    <option value="{{ title }}">{{ title }}</option>
+                {% endfor %}
+            </select>
+            <button type="button" onclick="getRecipe()">Get Recipe</button>
+            </label>
+        </form>
 
-    <div id="recipeDetails">
-        <!-- Recipe details will be displayed here -->
-    </div>
-
+        <div id="recipeDetails">
+            <!-- Recipe details will be displayed here -->
+        </div>
+    </main>
     <script>
-        document.querySelector('form').addEventListener('submit', async function(event) {
-            event.preventDefault();
+        async function getRecipe() {
             const selectedTitle = document.getElementById('recipeSelect').value;
             const response = await fetch(`/get_recipe/${selectedTitle}`);
             const recipe = await response.json();
-            
+    
+            // Replace newlines in ingredients and directions with HTML line breaks
+            const ingredientsHTML = recipe.ingredients.replace(/\n/g, '<br>');
+            const directionsHTML = recipe.directions.replace(/\n/g, '<br>');
+    
             // Update the recipe details
             const recipeDetailsDiv = document.getElementById('recipeDetails');
             recipeDetailsDiv.innerHTML = `
                 <h2>${recipe.title}</h2>
-                <p><strong>Ingredients:</strong><br>${recipe.ingredients}</p>
-                <p><strong>Directions:</strong><br>${recipe.directions}</p>
+                <p><strong>Ingredients:</strong><br>${ingredientsHTML}</p>
+                <p><strong>Directions:</strong><br>${directionsHTML}</p>
                 <p><strong>Tags:</strong><br>${recipe.tags}</p>
                 <p><strong>Source:</strong> ${recipe.source}</p>
                 <p><strong>URL:</strong> ${recipe.url}</p>
             `;
-        });
+        }
     </script>
+    
 </body>
 </html>
