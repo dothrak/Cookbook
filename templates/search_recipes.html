@@ -4,21 +4,229 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Recipes</title>
+    <title>Dothrak's Cookbook</title>
+    <style>
+    @font-face {
+        font-family: 'Italianno';
+        src: url('/static/fonts/Italianno-Regular.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'JuliusSansOne';
+        src: url("/static/fonts/JuliusSansOne-Regular.ttf") format('truetype');
+    }
+    header {
+        color: black;
+        padding: 10px;
+        font-family: 'JuliusSansOne', sans-serif;
+        font-size: 2em;
+        position: relative;
+        top: -30px;
+    }
+
+    body {
+        font-family: sans-serif;
+        background-image: url("/static/images/cookbook.jpg");
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    h1 {
+        font-family: 'Optima', sans-serif;
+        font-size: 2em;
+        margin: 0;
+    }
+
+    main {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        top: -100px;
+        flex-grow: 1;
+        font-family: 'JuliusSansOne', sans-serif;
+        font-size: 1em;
+        
+    }
+
+    form {
+        margin-top: 20px;
+        position: absolute;
+        top: 250px; /* Adjusted top position */
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: 'JuliusSansOne', sans-serif;
+        font-size: 1em;
+    }
+
+    label {
+        font-size: 1em;
+    }
+
+    select, button {
+        font-size: 1em;
+        margin: 10px;
+        font-family: 'JuliusSansOne', sans-serif;
+    }
+
+    select {
+        padding: 5px;
+        background-color: #CED3CE;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        background-color: #B3E2B0;
+        border-radius: 10px;
+        color: black;
+        border-radius: 10px;
+    }
+
+    .bar {
+        position: absolute;
+        background-color: black;
+        border-radius: 10px;
+        transform-origin: 0 0;
+    }
+
+    .bar1 {
+        width: 650px;
+        height: 1px;
+        top: 70px;
+        left: calc(48% - 325px);
+        transform: rotate(0deg);
+    }
+
+    .bar2 {
+        width: 650px;
+        height: 1px;
+        top: 174px;
+        left: calc(48% - 325px);
+        transform: rotate(0deg);
+    }
+
+    .dothrak-cookbook {
+        position: absolute;
+        top: 100px;
+        left: 48%;
+        transform: translateX(-50%);
+        color: black;
+        font-size: 1.5em;
+    }
+
+    #ingredientContainer {
+        width: 200px;
+        margin: 0px; /* Center the container horizontally */
+        left: 20px;
+        right: 900px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0px; /* Adjusted margin-top */
+    }
+    h2 {
+        width: 200px;
+        margin: 0px; /* Center the container horizontally */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 0px;
+    }
+
+    #recipeDetails {
+        width: 80%;
+        max-width: 650px;
+        margin: auto;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 200px;
+        left: calc(48% - 325px);
+        flex-grow: 1;
+        margin-top: 200px;
+        color: black;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+        transform: rotate(0deg);
+        font-family: 'JuliusSansOne', sans-serif;
+        font-size: 1em;
+        text-align: center;
+    }
+
+    </style>
 </head>
 <body>
-    <h1>Let's see what we can cook tonight</h1>
-    <form action="" method="POST">
-        {% for i in range(1, 11) %}
-            <label for="ingredient{{ i }}">Select ingredient {{ i }}:</label>
-            <select name="ingredient{{ i }}" id="ingredient{{ i }}">
-                <option value="">-- Select Ingredient --</option>
-                {% for ingredient in ingredients %}
-                    <option value="{{ ingredient }}">{{ ingredient }}</option>
-                {% endfor %}
-            </select>
-        {% endfor %}
-        <button type="submit">Search Recipes</button>
-    </form>
+    <header>1
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="dothrak-cookbook">Dothrak's Cookbook</div>
+    </header>
+    <a href="{{ url_for('index') }}" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: black; font-family: 'JuliusSansOne', sans-serif; font-size: 1em;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">Home</a>
+    <main>
+        <form action="" method="POST" id="recipeForm">
+            <div id="ingredientContainer">
+                <label for="ingredient1">Select ingredient 1:</label>
+                <select name="ingredient1" id="ingredient1">
+                    <option value="">-- Select Ingredient --</option>
+                    {% for ingredient in ingredients %}
+                        <option value="{{ ingredient }}">{{ ingredient }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="button" onclick="addIngredient()">+</button>
+            <button type="submit">Search Recipes</button>
+        </form>
+    </main>    
+    <script>
+        var ingredientCounter = 1;
+        function addIngredient() {
+            var container = document.getElementById("ingredientContainer");
+            
+            var newContainer = document.createElement("div");
+            newContainer.className = "ingredient-item";
+            newContainer.id = "ingredientContainer" + ingredientCounter;
+           
+            var newLabel = document.createElement("label");
+            newLabel.textContent = "Select ingredient " + (ingredientCounter + 1) + ":";
+            
+            var newSelect = document.createElement("select");
+            newSelect.name = "ingredient" + (ingredientCounter + 1);
+            newSelect.id = "ingredient" + (ingredientCounter + 1);
+            
+            var option = document.createElement("option");
+            option.value = "";
+            option.textContent = "-- Select Ingredient --";
+            newSelect.appendChild(option);
+            
+            {% for ingredient in ingredients %}
+                var option = document.createElement("option");
+                option.value = "{{ ingredient }}";
+                option.textContent = "{{ ingredient }}";
+                newSelect.appendChild(option);
+            {% endfor %}
+            
+            newContainer.appendChild(newLabel);
+            newContainer.appendChild(newSelect);
+            container.appendChild(newContainer);
+            
+            ingredientCounter++;
+        }
+    </script>
 </body>
 </html>

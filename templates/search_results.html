@@ -4,14 +4,172 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
+    <link rel="stylesheet" href="/static/css/recipes_inventory.css"> 
+    <title>Dothrak's Cookbook</title>
+    <style>
+        @font-face {
+            font-family: 'Italianno';
+            src: url('/static/fonts/Italianno-Regular.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'JuliusSansOne';
+            src: url("/static/fonts/JuliusSansOne-Regular.ttf") format('truetype');
+        }
+
+        body {
+            font-family: sans-serif;
+            background-image: url("/static/images/cookbook.jpg");
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            color: black;
+            padding: 10px;
+            font-family: 'JuliusSansOne', sans-serif;
+            font-size: 2em;
+            position: relative;
+            top: -30px;
+        }
+
+        a {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            color: black;
+            font-family: 'JuliusSansOne', sans-serif;
+            font-size: 1em;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+        }
+
+        main {
+            width: 80%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: -100px;
+            flex-grow: 1;
+            font-family: 'JuliusSansOne', sans-serif;
+            font-size: 1em;
+        }
+
+        form {
+            margin-top: 20px;
+            position: absolute;
+            top: 250px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            font-family: 'JuliusSansOne', sans-serif;
+            font-size: 1em;
+        }
+
+        label {
+            font-size: 1em;
+        }
+
+        select, button {
+            font-size: 1em;
+            margin: 10px;
+            font-family: 'JuliusSansOne', sans-serif;
+        }
+
+        select {
+            padding: 5px;
+            background-color: #CED3CE;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #B3E2B0;
+            border-radius: 10px;
+            color: black;
+            border-radius: 10px;
+        }
+        #recipeDetails {
+            width: 80%;
+            max-width: 800px;
+            margin: auto;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 200px;
+            flex-grow: 1;
+            margin-top: 200px;
+            color: black;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+            transform: rotate(0deg);
+            font-family: 'JuliusSansOne', sans-serif;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        #recipeDetails h2 {
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Search Results</h1>
-    <ul>
-        {% for title in titles %}
-            <li><a href="{{ url_for('get_recipe', title=title) }}">{{ title }}</a></li>
-        {% endfor %}
-    </ul>
+    <header>
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="dothrak-cookbook">Dothrak's Cookbook</div>
+    </header>
+    <a href="{{ url_for('index') }}" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: black; font-family: 'JuliusSansOne', sans-serif; font-size: 1em;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">Home</a>    
+    <main>
+        <form id="recipeForm">
+            <label for="recipeSelect">Choose a recipe:
+            <select name="recipeSelect" id="recipeSelect">
+                {% for title in titles %}
+                    <option value="{{ title }}">{{ title }}</option>
+                {% endfor %}
+            </select>
+            <button type="button" onclick="getRecipe()">Get Recipe</button>
+            </label>
+        </form>
+
+        <div id="recipeDetails">
+            <!-- Recipe details will be displayed here -->
+        </div>
+    </main>
+    <script>
+        async function getRecipe() {
+            const selectedTitle = document.getElementById('recipeSelect').value;
+            const response = await fetch(`/get_recipe/${selectedTitle}`);
+            const recipe = await response.json();
+    
+            // Replace newlines in ingredients and directions with HTML line breaks
+            const ingredientsHTML = recipe.ingredients.replace(/\n/g, '<br>');
+            const directionsHTML = recipe.directions.replace(/\n/g, '<br>');
+    
+            // Update the recipe details
+            const recipeDetailsDiv = document.getElementById('recipeDetails');
+            recipeDetailsDiv.innerHTML = `
+                <h2>${recipe.title}</h2>
+                <p><strong>Ingredients:</strong><br>${ingredientsHTML}</p>
+                <p><strong>Directions:</strong><br>${directionsHTML}</p>
+                <p><strong>Tags:</strong><br>${recipe.tags}</p>
+                <p><strong>Source:</strong> ${recipe.source}</p>
+                <p><strong>URL:</strong> ${recipe.url}</p>
+            `;
+        }
+    </script>
 </body>
 </html>
