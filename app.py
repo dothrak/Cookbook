@@ -2,12 +2,19 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
-db_path = "D:\\VS Code\\Projet\\Cookbook\\Database\\Receipes.db"
+db_path = "D:\\VS Code\\Projets\\Cookbook\\Database\\Recipes.db"
 
+def correct_encoding(texte):
+    try:
+        corrected_text = texte.encode('latin-1').decode('utf-8')
+        return texte, corrected_text
+    except UnicodeDecodeError:
+        return texte, None
+    
 def get_recipe_titles():
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
-    cursor.execute("SELECT Title FROM Receipes")
+    cursor.execute("SELECT name FROM Recipes")
     titles = [row[0] for row in cursor.fetchall()]
     connection.close()
     return titles
@@ -15,7 +22,7 @@ def get_recipe_titles():
 def get_ingredients():
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
-    cursor.execute("SELECT DISTINCT Ingredients FROM Receipes")
+    cursor.execute("SELECT DISTINCT description FROM Recipes")
     ingredients = [ingredient for row in cursor.fetchall() for ingredient in row[0].split('\n')]
     connection.close()
     return list(set(ingredients))
@@ -39,10 +46,10 @@ def search_recipes():
                 selected_ingredients.append(ingredient)
 
         if selected_ingredients:
-            connection = sqlite3.connect("D:\\VS Code\\Projet\\Cookbook\\Database\\Receipes.db")
+            connection = sqlite3.connect(db_path)
             cursor = connection.cursor()
 
-            query = "SELECT Title FROM Receipes WHERE " + " AND ".join(["Ingredients LIKE ?" for _ in selected_ingredients])
+            query = "SELECT name FROM Recipes WHERE " + " AND ".join(["description LIKE ?" for _ in selected_ingredients])
             
             cursor.execute(query, ['%' + ingredient + '%' for ingredient in selected_ingredients])
             titles = [row[0] for row in cursor.fetchall()]
@@ -59,10 +66,10 @@ def search_recipes():
 def get_recipe(title):
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM Receipes WHERE Title=?", (title,))
+    cursor.execute("SELECT * FROM Recipes WHERE name=?", (title,))
     recipe = cursor.fetchone()
     connection.close()
-    return jsonify({'title': recipe[1], 'ingredients': recipe[2], 'directions': recipe[3], 'tags': recipe[4], 'source': recipe[5], 'url': recipe[6]})
+    return jsonify({'title': recipe[0], 'ingredients': recipe[3], 'directions': recipe[6], 'source': recipe[2]})
 
 if __name__ == '__main__':
     app.run(debug=True)
