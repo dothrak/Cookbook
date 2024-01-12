@@ -97,7 +97,6 @@
             background-color: #B3E2B0;
             border-radius: 10px;
             color: black;
-            border-radius: 10px;
         }
         #recipeDetails {
             width: 80%;
@@ -157,8 +156,8 @@
     
             // Replace newlines in ingredients and directions with HTML line breaks
             const ingredientsHTML = recipe.ingredients.join('<br>');
-            const directionsHTML = recipe.directions.join('<br>');
-    
+            const directionsHTML = recipe.directions.join('<br>').replace(/\n/g, '<br>');
+
             // Update the recipe details
             const recipeDetailsDiv = document.getElementById('recipeDetails');
             recipeDetailsDiv.innerHTML = `

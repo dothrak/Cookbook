@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import json
+from unidecode import unidecode
 
 app = Flask(__name__)
 json_path = "D:\\VS Code\\Projets\\Cookbook\\Database\\unique_db.json"
@@ -10,10 +11,11 @@ def get_recipe_titles():
     titles = [recipe["name"] for recipe in recipes]
     return titles
 
+
 def get_ingredients():
     with open(json_path, 'r', encoding='utf-8') as json_file:
         recipes = json.load(json_file)
-    
+
     tags = set()
     for recipe in recipes:
         tags.update(recipe["tags"])
@@ -26,9 +28,11 @@ def get_ingredients():
                     filtered_tags.add(tag)
 
     filtered_tags.discard("")
-    
-    return sorted(list(filtered_tags))
 
+    # Utiliser unidecode pour convertir les caractères accentués avant le tri
+    sorted_tags = sorted(filtered_tags, key=lambda x: unidecode(x.lower()))
+
+    return sorted_tags
 
 @app.route('/')
 def index():
@@ -52,9 +56,12 @@ def search_recipes():
             with open(json_path, 'r', encoding='utf-8') as json_file:
                 recipes = json.load(json_file)
 
-            titles = [recipe["name"] for recipe in recipes if any(ingredient.lower() in recipe["description"].lower() for ingredient in selected_ingredients)]
+            matching_recipes = []
+            for recipe in recipes:
+                if all(tag.lower() in recipe["tags"] for tag in selected_ingredients):
+                    matching_recipes.append(recipe["name"])
 
-            return render_template('search_results.html', titles=titles)
+            return render_template('search_results.html', titles=matching_recipes)
 
     ingredients = get_ingredients()
     return render_template('search_recipes.html', ingredients=ingredients)
@@ -68,8 +75,17 @@ def get_recipe(title):
 
     for recipe in recipes:
         if recipe["name"] == title:
-            print("Retrieved Recipe:", recipe)  # Print the retrieved recipe to the console
-            return jsonify({'title': recipe["name"], 'ingredients': recipe["ingredients"], 'directions': recipe["steps"], 'source': recipe["url"]})
+            directions = recipe["steps"]
+            formatted_directions = ["\nStep {}: {}".format(i + 1, direction) for i, direction in enumerate(directions)]
+            
+            print("Retrieved Recipe:", recipe)
+            return jsonify({
+                'title': recipe["name"],
+                'ingredients': recipe["ingredients"],
+                'directions': formatted_directions,
+                'source': recipe["url"]
+            })
+
 
 if __name__ == '__main__':
     app.run(debug=True)
