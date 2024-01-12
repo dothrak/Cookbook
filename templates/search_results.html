@@ -156,8 +156,8 @@
             const recipe = await response.json();
     
             // Replace newlines in ingredients and directions with HTML line breaks
-            const ingredientsHTML = recipe.ingredients.replace(/\n/g, '<br>');
-            const directionsHTML = recipe.directions.replace(/\n/g, '<br>');
+            const ingredientsHTML = recipe.ingredients.join('<br>');
+            const directionsHTML = recipe.directions.join('<br>');
     
             // Update the recipe details
             const recipeDetailsDiv = document.getElementById('recipeDetails');

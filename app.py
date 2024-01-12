@@ -1,31 +1,34 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
-import sqlite3
+from flask import Flask, render_template, request, jsonify
+import json
 
 app = Flask(__name__)
-db_path = "D:\\VS Code\\Projets\\Cookbook\\Database\\Recipes.db"
+json_path = "D:\\VS Code\\Projets\\Cookbook\\Database\\unique_db.json"
 
-def correct_encoding(texte):
-    try:
-        corrected_text = texte.encode('latin-1').decode('utf-8')
-        return texte, corrected_text
-    except UnicodeDecodeError:
-        return texte, None
-    
 def get_recipe_titles():
-    connection = sqlite3.connect(db_path)
-    cursor = connection.cursor()
-    cursor.execute("SELECT name FROM Recipes")
-    titles = [row[0] for row in cursor.fetchall()]
-    connection.close()
+    with open(json_path, 'r', encoding='utf-8') as json_file:
+        recipes = json.load(json_file)
+    titles = [recipe["name"] for recipe in recipes]
     return titles
 
 def get_ingredients():
-    connection = sqlite3.connect(db_path)
-    cursor = connection.cursor()
-    cursor.execute("SELECT DISTINCT description FROM Recipes")
-    ingredients = [ingredient for row in cursor.fetchall() for ingredient in row[0].split('\n')]
-    connection.close()
-    return list(set(ingredients))
+    with open(json_path, 'r', encoding='utf-8') as json_file:
+        recipes = json.load(json_file)
+    
+    tags = set()
+    for recipe in recipes:
+        tags.update(recipe["tags"])
+
+    filtered_tags = set()
+    for recipe in recipes:
+        for tag in recipe["tags"]:
+            for ingredient in recipe["ingredients"]:
+                if tag.lower() in ingredient.lower():
+                    filtered_tags.add(tag)
+
+    filtered_tags.discard("")
+    
+    return sorted(list(filtered_tags))
+
 
 @app.route('/')
 def index():
@@ -46,30 +49,27 @@ def search_recipes():
                 selected_ingredients.append(ingredient)
 
         if selected_ingredients:
-            connection = sqlite3.connect(db_path)
-            cursor = connection.cursor()
+            with open(json_path, 'r', encoding='utf-8') as json_file:
+                recipes = json.load(json_file)
 
-            query = "SELECT name FROM Recipes WHERE " + " AND ".join(["description LIKE ?" for _ in selected_ingredients])
-            
-            cursor.execute(query, ['%' + ingredient + '%' for ingredient in selected_ingredients])
-            titles = [row[0] for row in cursor.fetchall()]
+            titles = [recipe["name"] for recipe in recipes if any(ingredient.lower() in recipe["description"].lower() for ingredient in selected_ingredients)]
 
-            connection.close()
-            
             return render_template('search_results.html', titles=titles)
 
     ingredients = get_ingredients()
     return render_template('search_recipes.html', ingredients=ingredients)
 
 
+
 @app.route('/get_recipe/<title>', methods=['GET'])
 def get_recipe(title):
-    connection = sqlite3.connect(db_path)
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM Recipes WHERE name=?", (title,))
-    recipe = cursor.fetchone()
-    connection.close()
-    return jsonify({'title': recipe[0], 'ingredients': recipe[3], 'directions': recipe[6], 'source': recipe[2]})
+    with open(json_path, 'r', encoding='utf-8') as json_file:
+        recipes = json.load(json_file)
+
+    for recipe in recipes:
+        if recipe["name"] == title:
+            print("Retrieved Recipe:", recipe)  # Print the retrieved recipe to the console
+            return jsonify({'title': recipe["name"], 'ingredients': recipe["ingredients"], 'directions': recipe["steps"], 'source': recipe["url"]})
 
 if __name__ == '__main__':
     app.run(debug=True)

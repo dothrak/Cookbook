@@ -195,38 +195,40 @@
     </main>    
     <script>
         var ingredientCounter = 1;
+    
         function addIngredient() {
             var container = document.getElementById("ingredientContainer");
-            
+    
             var newContainer = document.createElement("div");
             newContainer.className = "ingredient-item";
             newContainer.id = "ingredientContainer" + ingredientCounter;
-           
+    
             var newLabel = document.createElement("label");
             newLabel.textContent = "Select ingredient " + (ingredientCounter + 1) + ":";
-            
+    
             var newSelect = document.createElement("select");
             newSelect.name = "ingredient" + (ingredientCounter + 1);
             newSelect.id = "ingredient" + (ingredientCounter + 1);
-            
+    
             var option = document.createElement("option");
             option.value = "";
             option.textContent = "-- Select Ingredient --";
             newSelect.appendChild(option);
-            
+    
             {% for ingredient in ingredients %}
                 var option = document.createElement("option");
                 option.value = "{{ ingredient }}";
                 option.textContent = "{{ ingredient }}";
                 newSelect.appendChild(option);
             {% endfor %}
-            
+    
             newContainer.appendChild(newLabel);
             newContainer.appendChild(newSelect);
             container.appendChild(newContainer);
-            
+    
             ingredientCounter++;
         }
     </script>
+    
 </body>
 </html>
