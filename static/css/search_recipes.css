@@ -7,27 +7,13 @@
     font-family: 'JuliusSansOne';
     src: url("/static/fonts/JuliusSansOne-Regular.ttf") format('truetype');
 }
-
 header {
     color: black;
     padding: 10px;
     font-family: 'JuliusSansOne', sans-serif;
     position: relative;
-    top: -48px;
+    top: -30px;
     z-index: 2;
-}
-
-body::before {
-    content: "";
-    background-image: url("/static/images/cookbook.jpg");
-    background-size: cover;
-    background-position: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1; 
 }
 
 a {
@@ -43,6 +29,19 @@ a {
     z-index: 3;
 }
 
+body::before {
+    content: "";
+    background-image: url("/static/images/cookbook.jpg");
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}    
+
 body {
     font-family: sans-serif;
     margin: 0;
@@ -53,6 +52,12 @@ body {
     min-height: 100vh;
     position: relative;
     z-index: 1;
+}
+
+h1 {
+    font-family: 'Optima', sans-serif;
+    font-size: 2em;
+    margin: 0;
 }
 
 main {
@@ -70,14 +75,14 @@ main {
     font-size: 1em;
 }
 
-
 form {
-    margin-top: 0px;
+    margin-top: 20px;
     position: absolute;
-    top: 230px;
+    top: 250px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    flex-direction: column;
     align-items: center;
     font-family: 'JuliusSansOne', sans-serif;
     font-size: 1em;
@@ -99,11 +104,11 @@ select {
 }
 
 button {
-    padding: 10px 20px;
+    padding: 5px 10px;
     margin: 10px;
     cursor: pointer;
     background-color: #B3E2B0;
-    border-radius: 10px;
+    border-radius: 5px;
     color: black;
 }
 
@@ -132,7 +137,7 @@ button {
 
 .dothrak-cookbook {
     position: absolute;
-    top: 97.5px;
+    top: 97px;
     left: 50%;
     transform: translateX(-50%);
     color: black;
@@ -146,13 +151,32 @@ button {
     font-size: 1em;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
     position: relative;
-    top: 12px;
+    top: -8px;
     z-index: 3;
+}
+
+#ingredientContainer {
+    width: 200px;
+    margin: 0px;
+    left: 20px;
+    right: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+}
+h2 {
+    width: 200px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
 }
 
 #recipeDetails {
     width: 80%;
-    max-width: 800px;
+    max-width: 650px;
     margin: auto;
     margin-left: auto;
     margin-right: auto;
@@ -162,17 +186,13 @@ button {
     justify-content: center;
     position: absolute;
     top: 200px;
-    left: 24.5%;
+    left: calc(50% - 325px);
     flex-grow: 1;
-    margin-top: 150px;
+    margin-top: 200px;
     color: black;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
     transform: rotate(0deg);
     font-family: 'JuliusSansOne', sans-serif;
     font-size: 1em;
     text-align: center;
-}
-
-#recipeDetails h2 {
-    margin-top: 50px;
 }

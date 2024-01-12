@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,12 +9,14 @@
     <title>Dothrak's Cookbook</title>
 </head>
 <body>
+    <a href="{{ url_for('index') }}" class="home-link">Home</a>
+
+
     <header>
         <div class="bar bar1"></div>
         <div class="bar bar2"></div>
         <div class="dothrak-cookbook">Dothrak's Cookbook</div>
     </header>
-    <a href="{{ url_for('index') }}" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: black; font-family: 'JuliusSansOne', sans-serif; font-size: 1em;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">Home</a>    <main>
         <form id="recipeForm">
             <label for="recipeSelect">Choose a recipe:
             <select name="recipeSelect" id="recipeSelect">

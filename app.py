@@ -28,8 +28,6 @@ def get_ingredients():
                     filtered_tags.add(tag)
 
     filtered_tags.discard("")
-
-    # Utiliser unidecode pour convertir les caractères accentués avant le tri
     sorted_tags = sorted(filtered_tags, key=lambda x: unidecode(x.lower()))
 
     return sorted_tags

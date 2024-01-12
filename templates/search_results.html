@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/recipes_inventory.css"> 
     <title>Dothrak's Cookbook</title>
     <style>
         @font-face {
@@ -17,16 +16,29 @@
             src: url("/static/fonts/JuliusSansOne-Regular.ttf") format('truetype');
         }
 
-        body {
-            font-family: sans-serif;
+        body::before {
+            content: "";
             background-image: url("/static/images/cookbook.jpg");
             background-size: cover;
+            background-position: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        body {
+            font-family: sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
 
         header {
@@ -58,6 +70,7 @@
             justify-content: center;
             position: relative;
             top: -100px;
+            z-index: 2;
             flex-grow: 1;
             font-family: 'JuliusSansOne', sans-serif;
             font-size: 1em;
@@ -120,6 +133,50 @@
             text-align: center;
         }
 
+        .bar {
+        position: absolute;
+        background-color: black;
+        border-radius: 10px;
+        transform-origin: 0 0;
+        }
+
+        .bar1 {
+            width: 650px;
+            height: 1px;
+            top: 70px;
+            left: calc(50% - 325px);
+            transform: rotate(0deg);
+        }
+
+        .bar2 {
+            width: 650px;
+            height: 1px;
+            top: 174px;
+            left: calc(50% - 325px);
+            transform: rotate(0deg);
+        }
+
+        .dothrak-cookbook {
+            position: absolute;
+            top: 97px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: black;
+            font-size: 1.5em;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: black;
+            font-family: 'JuliusSansOne', sans-serif;
+            font-size: 1em;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+            position: relative;
+            top: -8px;
+            left: 0%;
+            z-index: 3;
+        }
+
         #recipeDetails h2 {
             margin-top: 50px;
         }
@@ -131,7 +188,7 @@
         <div class="bar bar2"></div>
         <div class="dothrak-cookbook">Dothrak's Cookbook</div>
     </header>
-    <a href="{{ url_for('index') }}" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: black; font-family: 'JuliusSansOne', sans-serif; font-size: 1em;text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);">Home</a>    
+    <a href="{{ url_for('index') }}" class="home-link">Home</a>
     <main>
         <form id="recipeForm">
             <label for="recipeSelect">Choose a recipe:
