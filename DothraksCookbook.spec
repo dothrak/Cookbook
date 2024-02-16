@@ -3,7 +3,7 @@
 
 a = Analysis(
     ['app.py'],
-    pathex=['PATH INSTALLATION\\Cookbook'],
+    pathex=['FILE PATH'],
     binaries=[],
     datas=[('templates', 'templates'), ('static', 'static'), ('Database', 'Database')],
     hiddenimports=[],
@@ -29,8 +29,8 @@ exe = EXE(
     upx_exclude=[],
     runtime_tmpdir=None,
     console=True,
-    icon='PATH INSTALLATION\\logo.ico',  
-    output='PATH INSTALLATION\\Cookbook',
+    icon='FILE PATH\logo.ico',  
+    output='FILE PATH',
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,

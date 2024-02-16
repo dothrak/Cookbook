@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 import json
 from unidecode import unidecode
+from var import db_path
 
 app = Flask(__name__)
-json_path = "D:\\VS Code\\Projets\\Cookbook\\Database\\unique_db.json"
+json_path = db_path
 
 def get_recipe_titles():
     with open(json_path, 'r', encoding='utf-8') as json_file:
