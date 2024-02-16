@@ -4,5 +4,11 @@ __pycache__/
 ### VS Code ###
 .vscode/
 
-### Database ###
-Database/
+### dist ###
+dist/
+
+### build ###
+build/
+
+###Conf###
+DothraksCookbook_copy.spec
