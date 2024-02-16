@@ -1,6 +1,6 @@
 # Dothrak's Cookbook
 
-It's a little web application I created because I never knew what to make myself to eat with the leftovers in my fridge. So I came up with an app that would let me pull out a set of culinary recipes to help me avoid wasting certain foods.
+It's a little web application I created because I never knew what to make myself to eat with the leftovers in my fridge. So I came up with this little app that would let me pull out a set of culinary recipes to help me avoid wasting certain foods.
 
 The application's database is made up of recipes from the French website Marmiton. Thanks to the SoTrxII API for helping me retrieve them.
 
