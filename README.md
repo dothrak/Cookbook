@@ -1,4 +1,4 @@
-# Dothrak's Cookbook
+# Dothrak's Cookbook 🍴
 
 It's a little web application I created because I never knew what to make myself to eat with the leftovers in my fridge. So I came up with this little app that would let me pull out a set of culinary recipes to help me avoid wasting certain foods.
 
@@ -7,7 +7,7 @@ The application's database is made up of recipes from the French website Marmito
 The database can be fully customized to suit individual culinary tastes. If you don't want to use the default one, you'll need to build it up before installing the application, and provide your json file to the cookbook script.
 
 
-## Installation
+## Installation 🔧
 
 Install the packages required to run the application.
 
