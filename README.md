@@ -4,9 +4,7 @@ It's a little web application I created because I never knew what to make myself
 
 The application's database is made up of recipes from the French website Marmiton. Thanks to the SoTrxII API for helping me retrieve them.
 
-The database is completely customizable to suit individual culinary tastes, so you'll need to build it up before installing the application.
-
-## Database creation
+The database can be fully customized to suit individual culinary tastes. If you don't want to use the default one, you'll need to build it up before installing the application, and provide your json file to the cookbook script.
 
 
 ## Installation
